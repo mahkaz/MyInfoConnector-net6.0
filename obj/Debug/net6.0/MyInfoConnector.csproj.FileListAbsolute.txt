@@ -1,0 +1,10 @@
+C:\Users\marcu\source\repos\myinfo-connector-dotnet\src\MyInfoConnector\bin\Debug\net6.0\sg.gov.ndi.MyInfoConnector.deps.json
+C:\Users\marcu\source\repos\myinfo-connector-dotnet\src\MyInfoConnector\bin\Debug\net6.0\sg.gov.ndi.MyInfoConnector.dll
+C:\Users\marcu\source\repos\myinfo-connector-dotnet\src\MyInfoConnector\bin\Debug\net6.0\sg.gov.ndi.MyInfoConnector.pdb
+C:\Users\marcu\source\repos\myinfo-connector-dotnet\src\MyInfoConnector\obj\Debug\net6.0\MyInfoConnector.csproj.AssemblyReference.cache
+C:\Users\marcu\source\repos\myinfo-connector-dotnet\src\MyInfoConnector\obj\Debug\net6.0\MyInfoConnector.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marcu\source\repos\myinfo-connector-dotnet\src\MyInfoConnector\obj\Debug\net6.0\MyInfoConnector.csproj.CoreCompileInputs.cache
+C:\Users\marcu\source\repos\myinfo-connector-dotnet\src\MyInfoConnector\obj\Debug\net6.0\sg.gov.ndi.MyInfoConnector.dll
+C:\Users\marcu\source\repos\myinfo-connector-dotnet\src\MyInfoConnector\obj\Debug\net6.0\refint\sg.gov.ndi.MyInfoConnector.dll
+C:\Users\marcu\source\repos\myinfo-connector-dotnet\src\MyInfoConnector\obj\Debug\net6.0\sg.gov.ndi.MyInfoConnector.pdb
+C:\Users\marcu\source\repos\myinfo-connector-dotnet\src\MyInfoConnector\obj\Debug\net6.0\ref\sg.gov.ndi.MyInfoConnector.dll

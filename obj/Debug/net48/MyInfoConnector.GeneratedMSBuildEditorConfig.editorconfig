@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = sg.gov.ndi.MyInfoConnector
+build_property.ProjectDir = C:\Users\marcu\source\repos\myinfo-connector-dotnet\src\MyInfoConnector\
