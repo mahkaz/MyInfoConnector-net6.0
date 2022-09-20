@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "awZzrAZiS53hhn4Zk/8/id93LpMFFQmEgnhCGJk2Cw8vc624f4kvogrifwY2a+M+2fZ0hZYCi67kZ8nCnUxAwA==",
+  "dgSpecHash": "LBC/m+t4rbXEVwqjoZQqJLkcgtulZLe4QMiH5xAaeJrpeMEKMKfGPs573HuI13Q0Q5ToFKSW8KRUY/4qgoVDYA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\marcu\\source\\repos\\myinfo-connector-dotnet\\src\\MyInfoConnector\\MyInfoConnector.csproj",
+  "projectFilePath": "C:\\Users\\marcu\\source\\projects\\MyInfoConnector-net60\\MyInfoConnector.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\marcu\\.nuget\\packages\\jose-jwt\\3.2.0\\jose-jwt.3.2.0.nupkg.sha512",
     "C:\\Users\\marcu\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
