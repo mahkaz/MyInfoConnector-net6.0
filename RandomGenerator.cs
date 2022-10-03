@@ -13,14 +13,14 @@ namespace sg.gov.ndi.MyInfoConnector
     /// </summary>
     internal class RandomGenerator : IDisposable
     {
-        private readonly RNGCryptoServiceProvider csp;
+        private readonly RandomNumberGenerator csp;
 
         /// <summary>
         /// Constructor
         /// </summary>
         public RandomGenerator()
         {
-            csp = new RNGCryptoServiceProvider();
+            csp = RandomNumberGenerator.Create();
         }
 
         /// <summary>
