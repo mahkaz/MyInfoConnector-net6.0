@@ -66,10 +66,11 @@ namespace sg.gov.ndi.MyInfoConnector
         /// The access token is then uses to invoke the person API to get the Person data.
         /// </summary>
         public string GetPersonJson(
-            string redirectUri
-            , string authCode
-            , string state = null
-            , string transactionId = null)
+            string redirectUri,
+            string authCode,
+            string state = null,
+            string transactionId = null
+            )
         {
             string result;
             string jsonResponse = null;

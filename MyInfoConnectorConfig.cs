@@ -67,7 +67,6 @@ namespace sg.gov.ndi.MyInfoConnector
                 var filePath = ResolvePath(PrivateKeyFilename);
                 _x509private = new X509Certificate2(filePath, PrivateKeyPassword, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
             }
-            // var privateKey = _x509private.PrivateKey as RSACryptoServiceProvider; // currently returning null
             
             var privateKey = RSACertificateExtensions.GetRSAPrivateKey(_x509private);
 
