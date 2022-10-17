@@ -55,10 +55,7 @@ namespace sg.gov.ndi.MyInfoConnector
 
         public bool IsSandbox => Environment == ApplicationConstant.SANDBOX;
 
-        private MyInfoConnectorConfig()
-        {
-
-        }
+        private MyInfoConnectorConfig() { }
 
         internal RSA GetPrivateKey()
         {

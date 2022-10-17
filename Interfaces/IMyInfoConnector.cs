@@ -11,6 +11,8 @@
 
         string GetAuthoriseUrl(string redirectUrl, string state = null);
 
+        string GetBCAuthoriseUrl(string redirectUri, string state, string bc_session);
+
         string GetPersonJson(string redirectUri, string authCode, string state, string txnNo = null);
 
     }

@@ -33,6 +33,18 @@ namespace sg.gov.ndi.MyInfoConnector
             var authorizeUrl = authApiUrl + args;
             return authorizeUrl;
         }
+        public string GetBCAuthoriseUrl(string redirectUri, string state, string bc_session)
+        {
+            var authApiUrl = _config.AuthoriseUrl;
+            var purpose = _config.Purpose;
+
+            var args = $"?client_id={_config.ClientId}&attributes={_config.AttributeCsv}&purpose={Uri.EscapeDataString(purpose)}&redirect_uri={Uri.EscapeDataString(redirectUri)}&bc_session={bc_session}";
+
+            args += "&state=" + (string.IsNullOrEmpty(state) ? "no-state" : Uri.EscapeDataString(state));
+
+            var authorizeUrl = authApiUrl + args;
+            return authorizeUrl;
+        }
 
         public static MyInfoConnector Create(string path)
         {
