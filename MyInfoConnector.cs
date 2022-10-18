@@ -31,6 +31,16 @@ namespace sg.gov.ndi.MyInfoConnector
             var authorizeUrl = authApiUrl + args;
             return authorizeUrl;
         }
+        /// <summary>
+        /// Backchannel authorise url if id-token was previously acquired during login
+        /// </summary>
+        /// <remarks>
+        /// WARNING: backchannel authorisation is unavailable - this code is built on assumptions based on /authorise api
+        /// </remarks>
+        /// <param name="redirectUri"></param>
+        /// <param name="state"></param>
+        /// <param name="bc_session"></param>
+        /// <returns></returns>
         public string GetBCAuthoriseUrl(string redirectUri, string state, string bc_session)
         {
             var authApiUrl = _config.AuthoriseUrl;
