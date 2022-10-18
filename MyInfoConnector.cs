@@ -1,11 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Text;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
-using System.Net;
-using System.IO;
 using System.Configuration;
+using System.Net.Http.Headers;
 
 namespace sg.gov.ndi.MyInfoConnector
 {
@@ -167,28 +165,39 @@ namespace sg.gov.ndi.MyInfoConnector
                 string parameters = $"{ApplicationConstant.GRANT_TYPE}={ApplicationConstant.AUTHORIZATION_CODE}&{ApplicationConstant.CODE}={authCode}&{ApplicationConstant.REDIRECT_URI}={redirectUri}&{ApplicationConstant.CLIENT_ID}={_config.ClientId}&{ApplicationConstant.CLIENT_SECRET}={_config.ClientSecret}&{ApplicationConstant.STATE}={state}";
 
                 // E) Prepare request for TOKEN API
-                var request = (HttpWebRequest)WebRequest.Create(_config.TokenUrl);
-                // var request = new HttpRequestMessage(HttpMethod.Post,_config.TokenUrl);
-                request.Method = ApplicationConstant.POST_METHOD;
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.Headers.Add(ApplicationConstant.CACHE_CONTROL, ApplicationConstant.NO_CACHE);
-                if (!_config.IsSandbox && !string.IsNullOrEmpty(authHeader))
+                HttpResponseMessage httpResponse;
+                using (HttpClient client = new HttpClient())
                 {
-                    request.Headers.Add(ApplicationConstant.AUTHORIZATION, authHeader);
+                    // build content
+                    var content = new StringContent(parameters.ToString());
+                    content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                    content.Headers.ContentType.CharSet = "UTF-8";
+
+                    // build request
+                    var req = new HttpRequestMessage(HttpMethod.Post, new Uri(_config.TokenUrl));
+                    req.Headers.Add(ApplicationConstant.CACHE_CONTROL, ApplicationConstant.NO_CACHE);
+                    req.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    req.Content = content;
+                    if (!_config.IsSandbox && !string.IsNullOrEmpty(authHeader))
+                    {
+                        req.Headers.Add(ApplicationConstant.AUTHORIZATION, authHeader);
+                    }
+
+                    // send
+                    httpResponse = client.SendAsync(req).Result;
+
                 }
-
-                byte[] byteArray = Encoding.UTF8.GetBytes(parameters.ToString());
-                request.ContentLength = byteArray.Length;
-                Stream dataStream = request.GetRequestStream();
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                request.Accept = "application/json";
-
-                var response = (HttpWebResponse)request.GetResponse();
-
-                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                object jsonObject = JsonConvert.DeserializeObject(responseString);
-                var jsonObj = JObject.Parse(jsonObject.ToString());
-                accessToken = (string)jsonObj.SelectToken("access_token");
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    string result = httpResponse.Content.ReadAsStringAsync().Result;
+                    object jsonObject = JsonConvert.DeserializeObject(result);
+                    var jsonObj = JObject.Parse(jsonObject.ToString());
+                    accessToken = (string)jsonObj.SelectToken("access_token");
+                }
+                else
+                {
+                    throw new Exception($"api call to {_config.TokenUrl} unsuccessful. (StatusCode {httpResponse.StatusCode})");
+                }
             }
             catch (Exception ex)
             {
@@ -257,26 +266,31 @@ State='{state}'"
                 specificPersonUrl = $"{specificPersonUrl}&{ApplicationConstant.TRANSACTION_NO}={txnNo}";
             }
 
-            var request = (HttpWebRequest)WebRequest.Create(specificPersonUrl);
-            request.Headers.Add(ApplicationConstant.CACHE_CONTROL, ApplicationConstant.NO_CACHE);
-            request.Method = ApplicationConstant.GET_METHOD;
-            request.Headers.Add("Authorization", authHeader);
-            var response = (HttpWebResponse)request.GetResponse();
-            Stream stream = null;
-            using (stream = response.GetResponseStream())
+            // E) send request to get person json
+            HttpResponseMessage httpResponse;
+            using (HttpClient client = new HttpClient())
             {
-                using (var sr = new StreamReader(stream))
-                {
-                    content = sr.ReadToEnd();
-                }
-            }
-            // }
-            // catch (Exception ex)
-            // {
-            //     Console.WriteLine($"{nameof(GetPersonJson)} failed:" + ex.Message);
-            // }
+                // build request
+                var req = new HttpRequestMessage(HttpMethod.Get, new Uri(specificPersonUrl));
+                req.Headers.Add(ApplicationConstant.CACHE_CONTROL, ApplicationConstant.NO_CACHE);
+                /*req.Headers.TryAddWithoutValidation("Authorization", authHeader);*/
 
-            return content.ToString();
+                // try client add auth header
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authHeader);
+
+                // send
+                httpResponse = client.SendAsync(req).Result;
+
+            }
+            if (httpResponse.IsSuccessStatusCode)
+            {
+                string personJsonStr = httpResponse.Content.ReadAsStringAsync().Result;
+                return personJsonStr;
+            }
+            else
+            {
+                throw new Exception($"api call to {specificPersonUrl} unsuccessful. (StatusCode {httpResponse.StatusCode})");
+            }
         }
 
 
