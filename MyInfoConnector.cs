@@ -13,6 +13,11 @@ namespace sg.gov.ndi.MyInfoConnector
         static readonly HttpClient Client = new HttpClient();
         private MyInfoConnectorConfig _config;
 
+        public string GetCallbackUrl()
+        {
+            return _config.CallbackUrl;
+        }
+
         /// <summary>
         /// Generate a URL for step 1
         /// </summary>

@@ -9,6 +9,8 @@
         /// </summary>
         string[] GetDiagnosticInfo();
 
+        string GetCallbackUrl();
+
         string GetAuthoriseUrl(string redirectUrl, string state = null);
 
         string GetBCAuthoriseUrl(string redirectUri, string state, string bc_session);
